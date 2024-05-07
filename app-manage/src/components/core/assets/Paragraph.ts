@@ -1,0 +1,1 @@
+export type Paragraph = "left" | "center" | "right" | "justify";

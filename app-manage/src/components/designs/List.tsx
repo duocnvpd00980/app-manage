@@ -1,11 +1,8 @@
-
-import { usePostAPIs } from "../../service/api/apiPosts";
 import { useStoreList } from "../../stores/useStoreList";
 
 const List = () => {
   const skills = useStoreList();
-  const state = usePostAPIs();
-  console.log(state.data);
+  console.log("--ren-der--")
   const listFor = () =>
     skills?.map((item, i) => (
       <li key={i}>

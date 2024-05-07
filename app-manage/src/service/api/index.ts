@@ -11,5 +11,6 @@ export class APIClient<T> {
   constructor(endpoint: string) {
     this.endpoint = endpoint;
   }
-  find = () => instance.get<T>(this.endpoint).then((res) => res.data);
+  find = (callback: (res: unknown) => void) => () =>
+    instance.get<T>(this.endpoint).then((res) => callback(res));
 }

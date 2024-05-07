@@ -1,5 +1,6 @@
 import { useStore } from "./useStore";
 import { Skill } from "./useStoreList";
+import _ from "lodash";
 
 type Store = (
   nameStore: "skills",
@@ -11,7 +12,7 @@ type Store = (
 ) => void;
 
 export const store: Store = (nameStore, callback) => {
-  const dataAPI: string = "not data";
+  //const dataAPI: string = "not data";
   const name = nameStore;
   const getState = useStore.getState;
   const setState = useStore.setState;
@@ -26,8 +27,14 @@ export const store: Store = (nameStore, callback) => {
     (set) => {
       const result = getState();
       const data = result[name];
-      if (!data) return;
-      setState({
+      const equal = _.isEqual(set, data);
+      if (!data || equal) return;
+      if (Array.isArray(set)) {
+        return setState({
+          [name]: set,
+        });
+      }
+      return setState({
         [name]: [...data, set],
       });
     },

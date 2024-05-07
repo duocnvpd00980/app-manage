@@ -1,4 +1,5 @@
 import { useStore } from "./useStore";
+import { useShallow } from 'zustand/react/shallow';
 
 export type Skill = {
   id: number;
@@ -8,4 +9,4 @@ export type Skills = {
   skills?: Skill[];
   input?: string;
 };
-export const useStoreList = () => useStore((state) => state.skills);
+export const useStoreList = () => useStore(useShallow((state) => state.skills));
