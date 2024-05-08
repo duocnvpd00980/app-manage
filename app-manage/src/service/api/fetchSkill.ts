@@ -32,12 +32,12 @@ export const useSkillAPImutate = (res) => useMutation({
     console.log("Server: thất bại và đồng bộ được");
   },
 });
-
+const useHello = () => alert("Hello");
 export const apis = (callback) => {
   return callback(
     ()=> {
       console.log("hello world api")
-      return useSkillAPI
+      return useHello
     }
   )
 }

@@ -12,6 +12,7 @@ function App() {
     console.log("hello 2")
   })
   call()
+  console.log(call)
   return (
     <main className="container">
       <div className="columns">
