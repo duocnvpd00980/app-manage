@@ -1,11 +1,17 @@
-import { MouseEventHandler } from "react";
+import { IState } from "../../service/api/fetchSkill";
 
 interface Prop {
-  onClick: MouseEventHandler | undefined;
+  onClick: any;
+  use: IState;
 }
 
-const Button = ({ onClick }: Prop) => (
-  <button onClick={onClick}>Add Skill</button>
-);
+const Button = ({ onClick, use }: Prop) => {
+  const { mutate, isPending } = use.mutate;
+  return (
+    <button onClick={() => onClick(mutate)}>
+      {isPending && "loading"} Add Skill
+    </button>
+  );
+};
 
 export default Button;

@@ -1,41 +1,55 @@
-import { useQuery } from "@tanstack/react-query";
+import {
+  UseMutateFunction,
+  useMutation,
+  useQuery,
+} from "@tanstack/react-query";
 import { message } from "../service/message";
-import { store } from "../stores/store";
-import fetchPosts from "../service/api/fetchPosts";
+import { store, unsubStore } from "../stores";
+import { createStore } from "../stores/useStore";
+import {
+  ISkill,
+  apis,
+  useSkillAPI,
+  useSkillAPImutate,
+} from "../service/api/fetchSkill";
 
-let input = "1";
+let input = "";
 
 export const Skill = {
   useAPIs: () => {
     const res = (data: any) => {
-      store("skills", (get, set) => {
-        console.log("thành công")
-        set(data.data);
+      store("skill", (get, set) => {
+        set(data);
       });
-    }
-    const req = useQuery({
-      queryKey: ["Posts"],
-      queryFn: fetchPosts.find(res),
-    });
+    };
+    const status = useSkillAPI(res);
+    const mutate = useSkillAPImutate(res);
 
-    return req;
+    const list = () => createStore((state) => state.skill);
+
+    return { status, mutate, list };
   },
 
   handleInput: (value: string) => {
     input = value;
-    console.log("render", input);
   },
 
-  handleAdd: () => {
-    store("skills", (get, set) => {
-      if (input === "") {
-        message.success("cut chot tao");
-        return;
-      }
-      set({
-        id: 0,
-        title: input,
-      });
-    });
+  handleAdd: (mutate: UseMutateFunction<ISkill, Error, ISkill, unknown>) => {
+   
+    console.log(apis)
+    // store("skill", (get, set) => {
+    //   if (input === "") {
+    //     message.success("cut chot tao");
+    //     return;
+    //   }
+    //   mutate({
+    //     name: input,
+    //     description:
+    //       "The Football Is Good For Training And Recreational Purposes",
+    //     category: "Christy Jerde",
+    //   });
+    //   message.success("Thêm thanh công");
+    //   return;
+    // });
   },
 };

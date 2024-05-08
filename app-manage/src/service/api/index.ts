@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com/",
+  baseURL: "https://663983fe1ae792804bec013c.mockapi.io/api/",
   timeout: 1000,
   headers: { "X-Custom-Header": "foobar" },
 });
@@ -11,6 +11,18 @@ export class APIClient<T> {
   constructor(endpoint: string) {
     this.endpoint = endpoint;
   }
-  find = (callback: (res: unknown) => void) => () =>
-    instance.get<T>(this.endpoint).then((res) => callback(res));
+
+  find = (store: (res: unknown) => void) => () =>
+    instance.get<T>(this.endpoint).then((res) => {
+      store(res.data);
+      return res.data;
+    });
+
+  insertOne = (store: (res: unknown) => void) => (payload: T) =>
+    instance.post<T>(this.endpoint, payload).then((res) => {
+      store(res.data);
+      return res.data;
+    });
 }
+
+

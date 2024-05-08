@@ -1,13 +1,12 @@
 import { create } from "zustand";
-import { Skills } from "./useStoreList";
 import { devtools, persist } from "zustand/middleware";
+import { IStoreSkill } from "../service/api/fetchSkill";
 
-const initialState: Skills = {
-  skills: [],
-  input: "",
+
+const initialState: IStoreSkill = {
+  skill: [],
 };
-
-export const useStore = create<Skills>()(
+export const createStore = create<IStoreSkill>()(
   devtools(() => ({
     ...initialState,
   }))
