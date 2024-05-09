@@ -1,13 +1,13 @@
 import { MutateFunction } from "@tanstack/react-query";
-import { createStore } from "./useStore";
+import { createStore } from "./useSkillStore";
 import _ from "lodash";
-import { ISkill, IStoreSkill } from "../service/api/fetchSkill";
+import { ISkill, IStoreSkill } from "../service/api/useSkillAPI";
 
 type Store = (
   nameStore: "skill",
   callback: (
-    get: () => void,
-    set: (set: ISkill) => void,
+    get: () => ISkill[],
+    set: (set: (ISkill | ISkill[])) => void,
     send: (mutate: MutateFunction<unknown>) => void
   ) => void
 ) => void;
@@ -22,8 +22,7 @@ export const store: Store = (nameStore, callback) => {
   return callback(
     () => {
       const result = getState();
-      console.log("req:", result);
-      return result;
+      return result[name];
     },
     (set) => {
       dataAPI = set;
@@ -44,6 +43,7 @@ export const store: Store = (nameStore, callback) => {
       return mutate(dataAPI);
     }
   );
+  
 };
 
 type Callback = (state: IStoreSkill) => void;

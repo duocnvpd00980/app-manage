@@ -12,17 +12,12 @@ export class APIClient<T> {
     this.endpoint = endpoint;
   }
 
-  find = (store: (res: unknown) => void) => () =>
+  find = (store: (res: T) => void) => () =>
     instance.get<T>(this.endpoint).then((res) => {
       store(res.data);
       return res.data;
     });
 
-  insertOne = (store: (res: unknown) => void) => (payload: T) =>
-    instance.post<T>(this.endpoint, payload).then((res) => {
-      store(res.data);
-      return res.data;
-    });
+  insertOne = (payload: T) =>
+    instance.post<T>(this.endpoint, payload).then((res) => res.data);
 }
-
-

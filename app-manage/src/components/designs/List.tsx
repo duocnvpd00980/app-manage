@@ -1,25 +1,12 @@
-import { IState } from "../../service/api/fetchSkill";
+import Item from "./Item";
+import _ from "lodash";
 
-interface Prop {
-  use: IState;
-}
-const List = ({ use }: Prop) => {
-  const { status, list } = use;
-  if(status.isError) return "error";
-  if(status.isLoading) return "loading...";
-  return (
-    <ul className="scroll">
-      {list().map((skill, i) => (
-        <li key={i}>
-          <h6>{skill.name}</h6>
-          <h6>{skill.category}</h6>
-          <h6>{skill.description}</h6>
-          <h6>{skill.created_at}</h6>
-          <hr />
-        </li>
-      ))}
-    </ul>
-  );
-};
+const List = () => (
+  <ul className="scroll">
+    {_.times(100, (item) => {
+      return <Item key={item} item={item} />;
+    }).reverse()}
+  </ul>
+);
 
 export default List;
