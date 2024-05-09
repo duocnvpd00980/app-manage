@@ -1,10 +1,12 @@
 import { UseMutateFunction } from "@tanstack/react-query";
 import { message } from "../service/message";
-import { ISkill } from "./useSkillAPI";
+import useSkillAPI, { ISkill } from "../api/useSkillAPI";
 
 let input = "";
 
 export const Skill = {
+  find: () => useSkillAPI.Find,
+  insertOne: () => useSkillAPI.InsertOne,
 
   handleInput: (value: string) => {
     input = value;

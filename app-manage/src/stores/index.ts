@@ -1,7 +1,7 @@
 import { MutateFunction } from "@tanstack/react-query";
 import { createStore } from "./useSkillStore";
 import _ from "lodash";
-import { ISkill, IStoreSkill } from "../features/useSkillAPI";
+import { ISkill, IStoreSkill } from "../api/useSkillAPI";
 
 type Store = (
   nameStore: "skill",
@@ -14,10 +14,13 @@ type Store = (
 
 export const store: Store = (nameStore, callback) => {
   let dataAPI: any;
-
   const name = nameStore;
   const { getState } = createStore;
   const { setState } = createStore;
+
+  subStore(()=>{
+    console.log("có sự thay đổi");
+  })
 
   return callback(
     () => {

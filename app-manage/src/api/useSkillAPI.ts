@@ -4,9 +4,9 @@ import {
   useMutation,
   useQuery,
 } from "@tanstack/react-query";
-import { APIClient } from "../service/api";
-import { useReadApis } from "../service/api/useReadAPIs";
-import { useWriteApis } from "../service/api/useWriteAPIs";
+import { APIClient } from ".";
+import { useFindAPIs, useReadApis } from "./useFindAPIs";
+import { useInsertOneAPIs, useWriteApis } from "./useInsertOneAPIs";
 
 
 export interface IStoreSkill {
@@ -31,6 +31,6 @@ const skill = new APIClient<ISkill>("skill");
 const SKILL_KEY = "skill";
 
 export default {
-  Read: () => useQuery(useReadApis(SKILL_KEY, skill.find)),
-  Write: () => useMutation(useWriteApis(SKILL_KEY, skill.insertOne)),
+  Find: () => useQuery(useFindAPIs(SKILL_KEY, skill.find)),
+  InsertOne: () => useMutation(useInsertOneAPIs(SKILL_KEY, skill.insertOne)),
 };

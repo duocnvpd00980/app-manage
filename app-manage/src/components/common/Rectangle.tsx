@@ -1,4 +1,3 @@
-"use client"
 import React, { HTMLAttributes, ReactNode } from "react";
 import styled from "@emotion/styled";
 import { ThemeProvider, css } from "@emotion/react";

@@ -4,7 +4,6 @@ import { useShallow } from "zustand/react/shallow";
 
 const Item = ({ item }: { item: number }) => {
   const list = createStore(useShallow((state) => state.skill[item]));
-  
   if(!list) return ;
    return (
     <li key={list.id}>

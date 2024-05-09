@@ -1,6 +1,6 @@
-import { createStore } from "../../stores/useSkillStore";
+import { createStore } from "../stores/useSkillStore";
 
-export const useReadApis = (key: string, fn: T) => {
+export const useFindAPIs = (key: string, fn: T) => {
   const callback = (data: T) => {
     createStore.setState({
       [key]: data,
