@@ -1,6 +1,6 @@
 import { UseMutateFunction } from "@tanstack/react-query";
 import { message } from "../service/message";
-import { ISkill } from "../service/api/useSkillAPI";
+import { ISkill } from "./useSkillAPI";
 
 let input = "";
 

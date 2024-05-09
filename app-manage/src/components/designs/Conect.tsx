@@ -1,4 +1,4 @@
-import useSkillAPI from "../../service/api/useSkillAPI";
+import useSkillAPI from "../../features/useSkillAPI";
 
 const Conect = () => {
   useSkillAPI.Read();

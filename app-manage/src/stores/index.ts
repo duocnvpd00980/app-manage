@@ -1,7 +1,7 @@
 import { MutateFunction } from "@tanstack/react-query";
 import { createStore } from "./useSkillStore";
 import _ from "lodash";
-import { ISkill, IStoreSkill } from "../service/api/useSkillAPI";
+import { ISkill, IStoreSkill } from "../features/useSkillAPI";
 
 type Store = (
   nameStore: "skill",

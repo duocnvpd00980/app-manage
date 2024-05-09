@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { IStoreSkill } from "../service/api/useSkillAPI";
+import { IStoreSkill } from "../features/useSkillAPI";
 
 
 const initialState: IStoreSkill = {

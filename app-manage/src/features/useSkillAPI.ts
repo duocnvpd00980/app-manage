@@ -4,9 +4,10 @@ import {
   useMutation,
   useQuery,
 } from "@tanstack/react-query";
-import { APIClient } from ".";
-import { useReadApis } from "./useReadApis";
-import { useWriteApis } from "./useWriteApis";
+import { APIClient } from "../service/api";
+import { useReadApis } from "../service/api/useReadAPIs";
+import { useWriteApis } from "../service/api/useWriteAPIs";
+
 
 export interface IStoreSkill {
   skill: ISkill[];
