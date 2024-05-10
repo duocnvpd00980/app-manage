@@ -1,28 +1,36 @@
 import "./App.css";
+import { Line } from "./components/common";
 import Button from "./components/controls/Button";
 import Input from "./components/controls/Input";
 import Caption from "./components/designs/Caption";
 import Container from "./components/designs/Container";
+import Content from "./components/designs/Content";
 import List from "./components/designs/List";
+import NavBar from "./components/designs/NavBar";
+import Sidebar from "./components/designs/Sider";
 import Wrapper from "./components/designs/Wrapper";
-import { Skill } from "./features/Skill";
+import { useSkill } from "./hooks/skill/useSkill";
 
 function App() {
+  const skill = useSkill();
   return (
     <Wrapper>
-      <main className="container">
-        <div className="columns">
-          <Container as="control-left">
-            <Caption value="Controls" />
-            <Button onClick={Skill.handleAdd} />
-            <Input onChange={Skill.handleInput} />
-          </Container>
-          <div className="column">
-            <Caption value="Designs" />
+      <Container>
+        <Sidebar>
+          <Button onClick={skill.handleAdd} />
+          <Button onClick={skill.handleAdd} />
+          <Button onClick={skill.handleAdd} />
+          <Button onClick={skill.handleAdd} />
+          <Button onClick={skill.handleAdd} />
+        </Sidebar>
+        <Content>
+          <NavBar>
+            <Input onChange={skill.handleInput} />
+            <Caption />
             <List />
-          </div>
-        </div>
-      </main>
+          </NavBar>
+        </Content>
+      </Container>
     </Wrapper>
   );
 }

@@ -1,9 +1,9 @@
 import { memo } from "react";
-import { createStore } from "../../stores/useSkillStore";
 import { useShallow } from "zustand/react/shallow";
+import { storeSkill } from "../../stores/storeSkill";
 
 const Item = ({ item }: { item: number }) => {
-  const list = createStore(useShallow((state) => state.skill[item]));
+  const list = storeSkill(useShallow((state) => state.skill[item]));
   if(!list) return ;
    return (
     <li key={list.id}>

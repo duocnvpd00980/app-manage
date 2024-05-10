@@ -12,9 +12,10 @@ export class APIClient<T> {
     this.endpoint = endpoint;
   }
 
-  find = (store: (res: T) => void) => () =>
+  listen = (callback: (res: T) => void) => () =>
     instance.get<T>(this.endpoint).then((res) => {
-      store(res.data);
+      callback(res.data);
+      //console.log('At>>>',res.data)
       return res.data;
     });
 

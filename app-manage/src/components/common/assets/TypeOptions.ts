@@ -5,3 +5,5 @@ export type TypeOptions =
   | "subscript"
   | "strikethrough"
   | "italic";
+
+  

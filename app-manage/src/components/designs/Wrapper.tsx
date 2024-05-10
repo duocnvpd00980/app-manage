@@ -1,14 +1,27 @@
-import { ReactNode } from "react";
-import useSkillAPI from "../../api/useSkillAPI";
+import { ReactNode, useCallback } from "react";
+import { useSkill } from "../../hooks/skill/useSkill";
+import { useQueryClient } from "@tanstack/react-query";
+import { useSkillDetail } from "../../hooks/skill_details/useSkillDetail";
 
 interface Props {
   children: ReactNode;
 }
 const Wrapper = ({ children }: Props) => {
-  const { isFetched } = useSkillAPI.Find();
+  
+  const skill = useSkill();
+  const skillDetail = useSkillDetail();
+
+  skillDetail.Listen();
+  skill.Listen(useCallback((data) => data.length, []));
+  
+  const queryClient = useQueryClient();
+  if (queryClient.isFetching()) {
+    console.log("At least one is fetching!");
+  }
+
   return (
     <>
-      {isFetched && <h2>Loading....</h2>}
+      {<h2>Loading....</h2>}
       {children}
     </>
   );

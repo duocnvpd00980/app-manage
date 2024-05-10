@@ -1,12 +1,13 @@
-import { createStore } from "../stores/useSkillStore";
+import { storeSkill } from "../stores/storeSkill";
 
-export const useInsertOneAPIs = (key: string, fn: T) => {
-  const dataStore = createStore.getState();
+
+export const apiInsertOne_old = (key: string, fn: T) => {
+  const dataStore = storeSkill.getState();
   return {
     mutationFn: fn,
     onMutate: (variables: T) => {
       variables.id = key;
-      createStore.setState({
+      storeSkill.setState({
         [key]: variables,
       });
       return variables.id;
@@ -15,7 +16,7 @@ export const useInsertOneAPIs = (key: string, fn: T) => {
       const updateState = dataStore[key].map((item: T) =>
         item.id === context ? result : item
       );
-      createStore.setState({
+      storeSkill.setState({
         [key]: updateState,
       });
     },
@@ -23,7 +24,7 @@ export const useInsertOneAPIs = (key: string, fn: T) => {
       const deleteSkill = dataStore[key].filter(
         (item: T) => item.id !== context
       );
-      createStore.setState({
+      storeSkill.setState({
         [key]: deleteSkill,
       });
     },

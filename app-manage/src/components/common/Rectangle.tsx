@@ -5,13 +5,18 @@ import { basicColor } from "./assets/basicColor";
 import { Appearance, Transform, rem } from ".";
 import { IAppearance } from "./assets/Appearance";
 import { ITransform } from "./assets/Transform";
+import _ from "lodash";
 
 interface Prop extends IAppearance, ITransform, HTMLAttributes<T> {
   children: ReactNode;
   inline?: boolean;
+  variant?: {
+    transform?: Transform;
+    appearance?: Appearance;
+  } | object;
 }
 
-interface StyledProp extends HTMLAttributes<T>{
+interface StyledProp extends HTMLAttributes<T> {
   properties?: {
     transform?: Transform;
     appearance?: Appearance;
@@ -77,9 +82,6 @@ const Element = styled.div(({ properties }: StyledProp) => {
     ${properties?.inline &&
     css`
       flex-basis: ${rem(transform?.w ?? 0)};
-    `}
-    ${!properties?.inline &&
-    css`
       max-width: ${rem(transform?.w ?? "100%")};
     `}
     min-height: ${rem(transform?.h ?? "100%")};
@@ -95,9 +97,32 @@ const Element = styled.div(({ properties }: StyledProp) => {
     `}
   `;
 });
-const Rectangle = ({ children, transform, appearance, inline, ...props }: Prop) => {
+const Rectangle = ({
+  children,
+  transform,
+  appearance,
+  inline,
+  variant,
+  ...props
+}: Prop) => {
+  const nextTransform = transform;
+  const nextAppearance = appearance;
+
+  if (variant) {
+    const variants = { ...variant };
+    const transform = { ...variants.transform, ...nextTransform };
+    const appearance = { ...variants.appearance, ...nextAppearance };
+    return (
+      <Element properties={{ transform, appearance, inline }} {...props}>
+        {children}
+      </Element>
+    );
+  }
+
   return (
-    <Element properties={{ transform, appearance, inline }} {...props}>{children}</Element>
+    <Element properties={{ transform, appearance, inline }} {...props}>
+      {children}
+    </Element>
   );
 };
 

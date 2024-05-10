@@ -2,7 +2,7 @@ import { TypeColor } from "./basicColor";
 
 export type Appearance = {
   fill?: TypeColor;
-  stroke?: [number, string] | ["size" | "color"];
+  stroke?: [number, string];
   radii?:
     | number
     | {
@@ -22,7 +22,7 @@ export type Appearance = {
 export interface IAppearance extends Appearance {
   appearance?: {
     fill?: TypeColor;
-    stroke?: [number, string] | ["size" | "color"];
+    stroke?: [number, string];
     radii?:
     | number
     | {

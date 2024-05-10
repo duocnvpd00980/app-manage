@@ -1,66 +1,51 @@
-import { MutateFunction } from "@tanstack/react-query";
-import { createStore } from "./useSkillStore";
 import _ from "lodash";
-import { ISkill, IStoreSkill } from "../api/useSkillAPI";
+import { ISkill } from "../hooks/skill/useSkillAPI";
+import { storeSkill } from "./storeSkill";
+import { ISkillDetails } from "../hooks/skill_details/useSkillDetailAPI";
 
-type Store = (
-  nameStore: "skill",
-  callback: (
-    get: () => ISkill[],
-    set: (set: (ISkill | ISkill[])) => void,
-    send: (mutate: MutateFunction<unknown>) => void
-  ) => void
-) => void;
 
-export const store: Store = (nameStore, callback) => {
-  let dataAPI: any;
-  const name = nameStore;
-  const { getState } = createStore;
-  const { setState } = createStore;
+/* UPDATE TYPESCRIPT */
+export interface IDocument extends ISkill, ISkillDetails {}
+export type ICollection = "skill" | "skill_details";
+/* UPDATE TYPESCRIPT */
 
-  subStore(()=>{
-    console.log("có sự thay đổi");
-  })
 
+type Store = (get: () => void, set: (document: IDocument) => void) => void;
+
+export const store = (collection: ICollection, callback: Store) => {
+  const { setState, getState } = storeSkill;
+  const documents = getState();
+  const documentStore = documents[collection];
   return callback(
     () => {
-      const result = getState();
-      return result[name];
+      return documentStore;
     },
-    (set) => {
-      dataAPI = set;
-      const result = getState();
-      const data = result[name];
-      const equal = _.isEqual(set, data);
-      if (!data || equal) return;
-      if (Array.isArray(set)) {
-        return setState({
-          [name]: set,
-        });
+    (document) => {
+      const equal = _.isEqual(document, documentStore);
+      let data: object | [object] = document;
+      if (equal) return;
+      if (!Array.isArray(data)) {
+        data = [...documentStore, document];
       }
-      return setState({
-        [name]: [...data, set],
+      setState({
+        [collection]: data,
       });
-    },
-    (mutate) => {
-      return mutate(dataAPI);
     }
   );
-  
 };
 
-type Callback = (state: IStoreSkill) => void;
-let unsubscribe: (() => void) | undefined;
+// type Callback = (state: IStoreSkill) => void;
+// let unsubscribe: (() => void) | undefined;
 
-export const subStore = (callback: Callback) => {
-  unsubscribe = createStore.subscribe((state) => {
-    return callback(state);
-  });
-};
+// export const subStore = (callback: Callback) => {
+//   unsubscribe = storeSkill.subscribe((state) => {
+//     return callback(state);
+//   });
+// };
 
-export const unsubStore = () => {
-  if (unsubscribe) {
-    unsubscribe();
-    unsubscribe = undefined;
-  }
-};
+// export const unsubStore = () => {
+//   if (unsubscribe) {
+//     unsubscribe();
+//     unsubscribe = undefined;
+//   }
+// };
