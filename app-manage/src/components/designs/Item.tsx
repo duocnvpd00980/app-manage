@@ -1,19 +1,21 @@
-import { memo } from "react";
-import { useShallow } from "zustand/react/shallow";
-import { storeSkill } from "../../stores/storeSkill";
+import React, { memo } from "react";
+import { useSkill } from "../../hooks/skill/useSkill";
 
-const Item = ({ item }: { item: number }) => {
-  const list = storeSkill(useShallow((state) => state.skill[item]));
-  if(!list) return ;
-   return (
-    <li key={list.id}>
-      <h6>{list.name}</h6>
-      <h6>{list.category}</h6>
-      <h6>{list.description}</h6>
-      <h6>{list.created_at}</h6>
+const Item = memo(({ listItem }: { listItem: number }) => {
+  const { item } = useSkill();
+  const items = item(listItem);
+
+  if (!items) return null;
+
+  return (
+    <li key={items.id} className="item">
+      <h6>{items.name}</h6>
+      <h6>{items.category}</h6>
+      <h6>{items.description}</h6>
+      <h6>{items.created_at}</h6>
       <hr />
     </li>
   );
-};
+});
 
-export default memo(Item);
+export default Item;

@@ -1,4 +1,4 @@
-import { storeSkill } from "../stores/storeSkill";
+import { storeSkill } from "../stores/stores";
 
 
 export const apiInsertOne_old = (key: string, fn: T) => {

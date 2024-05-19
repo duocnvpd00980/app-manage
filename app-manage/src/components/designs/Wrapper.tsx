@@ -8,16 +8,16 @@ interface Props {
 }
 const Wrapper = ({ children }: Props) => {
   
-  const skill = useSkill();
-  const skillDetail = useSkillDetail();
+  // const skill = useSkill();
+  // const skillDetail = useSkillDetail();
 
-  skillDetail.Listen();
-  skill.Listen(useCallback((data) => data.length, []));
+  // skillDetail.Listen();
+  // skill.Listen(useCallback((data) => data.length, []));
   
-  const queryClient = useQueryClient();
-  if (queryClient.isFetching()) {
-    console.log("At least one is fetching!");
-  }
+  // const queryClient = useQueryClient();
+  // if (queryClient.isFetching()) {
+  //   console.log("At least one is fetching!");
+  // }
 
   return (
     <>

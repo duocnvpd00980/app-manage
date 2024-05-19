@@ -1,5 +1,4 @@
 import "./App.css";
-import { Line } from "./components/common";
 import Button from "./components/controls/Button";
 import Input from "./components/controls/Input";
 import Caption from "./components/designs/Caption";

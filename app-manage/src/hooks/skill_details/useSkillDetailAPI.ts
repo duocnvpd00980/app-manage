@@ -4,9 +4,9 @@ import {
   useMutation,
   useQuery,
 } from "@tanstack/react-query";
-import { APIClient } from "../../api";
+import { APIClient } from "../../api/apis";
 import { apiInsertOne } from "../../api/apiInsertOne";
-import { SKILL_DETAILS_KEY } from "../../stores/storeSkill";
+import { KEY_SKILL_DETAILS } from "../../stores/stores";
 import { apiListen } from "../../api/apiListen";
 
 export interface ISkillDetails {
@@ -17,17 +17,11 @@ export interface ISkillDetails {
   resources: string;
 }
 
-export interface IState {
-  status: UseQueryResult<ISkillDetails, Error>;
-  mutate: UseMutationResult<ISkillDetails, Error, ISkillDetails, unknown>;
-  list: any;
-}
-
-const skill = new APIClient<ISkillDetails>(SKILL_DETAILS_KEY);
+const skill = new APIClient<ISkillDetails>(KEY_SKILL_DETAILS);
 
 export default {
   Listen: (callback: (res: ISkillDetails) => void) =>
-    useQuery(apiListen(SKILL_DETAILS_KEY, skill.listen(callback), ["data"])),
+    useQuery(apiListen(KEY_SKILL_DETAILS, skill.listen(callback), ["data"])),
   InsertOne: () =>
-    useMutation(apiInsertOne(SKILL_DETAILS_KEY, skill.insertOne)),
+    useMutation(apiInsertOne(KEY_SKILL_DETAILS, skill.insertOne)),
 };
